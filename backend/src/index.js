@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
@@ -36,6 +37,18 @@ app.use('/api/wallet', require('./routes/wallet'));
 
 // Payment page route
 app.use('/', require('./routes/payment'));
+
+// Serve frontend build in production
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from Next.js build
+  app.use(express.static(path.join(__dirname, '../../frontend/.next')));
+  app.use(express.static(path.join(__dirname, '../../frontend/public')));
+  
+  // Serve Next.js app for all other routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/.next/server/pages/index.html'));
+  });
+}
 
 // Error handling middleware
 app.use((err, req, res, next) => {
