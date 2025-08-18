@@ -40,38 +40,7 @@ app.use('/api/wallet', require('./routes/wallet'));
 // Payment page route
 app.use('/', require('./routes/payment'));
 
-// Serve frontend build in production
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from Next.js build
-  app.use(express.static(path.join(__dirname, '../../frontend/.next')));
-  app.use(express.static(path.join(__dirname, '../../frontend/public')));
-  
-  // Serve Next.js app for all other routes (but not API routes)
-  app.get('*', (req, res, next) => {
-    // Skip API routes
-    if (req.path.startsWith('/api/') || req.path === '/health') {
-      return next();
-    }
-    
-    // Try to serve the frontend
-    const indexPath = path.join(__dirname, '../../frontend/.next/server/pages/index.html');
-    if (require('fs').existsSync(indexPath)) {
-      res.sendFile(indexPath);
-    } else {
-      // Fallback to basic HTML if frontend build doesn't exist
-      res.send(`
-        <html>
-          <head><title>MemeCoin Promoter</title></head>
-          <body>
-            <h1>MemeCoin Promoter API</h1>
-            <p>Backend is running. Frontend build in progress...</p>
-            <p><a href="/api/promotions">API Endpoints</a></p>
-          </body>
-        </html>
-      `);
-    }
-  });
-}
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
