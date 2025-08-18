@@ -1,0 +1,39 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "MemeCoin Promoter Backend API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "solana",
+    "meme-coin",
+    "promotion",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/pay": "^0.2.6",
+    "@solana/web3.js": "^1.98.4",
+    "axios": "^1.11.0",
+    "bullmq": "^5.56.9",
+    "cors": "^2.8.5",
+    "discord.js": "^14.21.0",
+    "dotenv": "^17.2.1",
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.66.0",
+    "openai": "^5.11.0",
+    "redis": "^5.7.0",
+    "twitter-api-v2": "^1.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
