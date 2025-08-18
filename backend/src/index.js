@@ -12,7 +12,9 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
@@ -44,9 +46,30 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../frontend/.next')));
   app.use(express.static(path.join(__dirname, '../../frontend/public')));
   
-  // Serve Next.js app for all other routes
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/.next/server/pages/index.html'));
+  // Serve Next.js app for all other routes (but not API routes)
+  app.get('*', (req, res, next) => {
+    // Skip API routes
+    if (req.path.startsWith('/api/') || req.path === '/health') {
+      return next();
+    }
+    
+    // Try to serve the frontend
+    const indexPath = path.join(__dirname, '../../frontend/.next/server/pages/index.html');
+    if (require('fs').existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      // Fallback to basic HTML if frontend build doesn't exist
+      res.send(`
+        <html>
+          <head><title>MemeCoin Promoter</title></head>
+          <body>
+            <h1>MemeCoin Promoter API</h1>
+            <p>Backend is running. Frontend build in progress...</p>
+            <p><a href="/api/promotions">API Endpoints</a></p>
+          </body>
+        </html>
+      `);
+    }
   });
 }
 
