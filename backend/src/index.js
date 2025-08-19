@@ -43,13 +43,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../frontend/.next')));
   app.use(express.static(path.join(__dirname, '../../frontend/public')));
   
-  // Serve Next.js app for all other routes (but not API routes)
-  app.get('*', (req, res, next) => {
-    // Skip API routes
-    if (req.path.startsWith('/api/') || req.path === '/health') {
-      return next();
-    }
-    
+  // Serve Next.js app for root and other non-API routes
+  app.get('/', (req, res) => {
     // Try to serve the frontend
     const indexPath = path.join(__dirname, '../../frontend/.next/server/pages/index.html');
     if (require('fs').existsSync(indexPath)) {
