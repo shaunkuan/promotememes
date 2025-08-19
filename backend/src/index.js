@@ -18,10 +18,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Basic route
-app.get('/', (req, res) => {
-  res.json({ message: 'MemeCoin Promoter API is running!' });
-});
+
 
 // Health check
 app.get('/health', (req, res) => {
