@@ -12,7 +12,6 @@ yarn-error.log*
 .env.production.local
 
 # Build outputs
-.next/
 out/
 build/
 dist/
@@ -55,8 +54,7 @@ jspm_packages/
 .cache
 .parcel-cache
 
-# next.js build output
-.next
+
 
 # nuxt.js build output
 .nuxt
