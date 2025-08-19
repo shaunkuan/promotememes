@@ -34,8 +34,8 @@ app.use('/api/promotions', require('./routes/promotions'));
 app.use('/api/tokens', require('./routes/tokens'));
 app.use('/api/wallet', require('./routes/wallet'));
 
-// Payment page route
-app.use('/', require('./routes/payment'));
+// Payment page route (only for /pay)
+app.use('/pay', require('./routes/payment'));
 
 // Serve frontend build in production
 if (process.env.NODE_ENV === 'production') {
