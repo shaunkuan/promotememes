@@ -29,6 +29,11 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Test route
+app.get('/test', (req, res) => {
+  res.json({ message: 'Test route working!' });
+});
+
 // API Routes
 app.use('/api/promotions', require('./routes/promotions'));
 app.use('/api/tokens', require('./routes/tokens'));
